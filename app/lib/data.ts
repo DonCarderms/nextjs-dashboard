@@ -4,6 +4,7 @@ import {
   CustomersTableType,
   InvoiceForm,
   InvoicesTable,
+  LatestInvoice,
   LatestInvoiceRaw,
   Revenue,
 } from './definitions';
@@ -38,8 +39,7 @@ export async function fetchLatestInvoices() {
       JOIN customers ON invoices.customer_id = customers.id
       ORDER BY invoices.date DESC
       LIMIT 5`;
-
-    const latestInvoices = data.map((invoice) => ({
+    const latestInvoices = data.map((invoice: { amount: number; }) => ({
       ...invoice,
       amount: formatCurrency(invoice.amount),
     }));
